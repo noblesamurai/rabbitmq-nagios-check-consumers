@@ -1,0 +1,34 @@
+{
+  "name": "rabbitmq-nagios-check-consumers",
+  "version": "0.0.0",
+  "description": "A nagios plugin to check the number of consumers on an amqp queue.",
+  "main": "amqp-consumers.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noblesamurai/rabbitmq-nagios-check-consumers"
+  },
+  "keywords": [
+    "AMQP",
+    "nagios",
+    "plugin",
+    "consumers",
+    "check"
+  ],
+  "author": "Timothy Leslie Allen <allen.timothy.email@gmail.com> (https://github.com/timlesallen)",
+  "license": "BSD 3-Clause",
+  "bugs": {
+    "url": "https://github.com/noblesamurai/rabbitmq-nagios-check-consumers/issues"
+  },
+  "homepage": "https://github.com/noblesamurai/rabbitmq-nagios-check-consumers",
+  "dependencies": {
+    "nagios-plugin": "^0.1.2",
+    "node-getopt": "^0.2.3",
+    "request-json": "^0.4.10"
+  }
+}
