@@ -46,12 +46,12 @@ client.get('queues/' + vHost + '/' + queue, function(err, res, body) {
     plugin.addMessage(plugin.states.OK, message);
 
     // Add warning message if relevant
-    if (body.active_consumers < args.options.warning) {
+    if (body.consumers < args.options.warning) {
       plugin.addMessage(plugin.states.WARNING, message);
     }
 
     // Add critical message if relevant
-    if (body.active_consumers < args.options.critical) {
+    if (body.consumers < args.options.critical) {
       plugin.addMessage(plugin.states.CRITICAL, message);
     }
   }
