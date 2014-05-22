@@ -40,7 +40,6 @@ client.get('queues/' + vHost + '/' + queue, function(err, res, body) {
   if (err || res.statusCode !== 200) {
     plugin.addMessage(plugin.states.UNKNOWN, 'Could not query the API');
   } else {
-    console.log(body);
     var message = body.consumers + ' consumers';
 
     // Default
