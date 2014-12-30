@@ -39,7 +39,6 @@ describe('index.js', function() {
   });
   it('is OK if not too many messages ready', function(done) {
     exec(command + ' --messages-ready-warning-threshold 101 --messages-ready-critical-threshold 120', function callback(err, stdout, stderr){
-      console.log(stdout);
       expect(stdout).to.contain('OK');
       done();
     });
@@ -47,7 +46,6 @@ describe('index.js', function() {
   it('is WARNING if too many messages ready', function(done) {
     exec(command + ' --messages-ready-warning-threshold 100 --messages-ready-critical-threshold 120', function callback(err, stdout, stderr){
       expect(err).to.be.ok();
-      console.log(stdout);
       expect(stdout).to.contain('WARNING');
       done();
     });
