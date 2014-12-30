@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/index.js"
   },
   "repository": {
     "type": "git",
@@ -27,8 +27,13 @@
   },
   "homepage": "https://github.com/noblesamurai/rabbitmq-nagios-check-consumers",
   "dependencies": {
+    "expect.js": "^0.3.1",
     "nagios-plugin": "^0.1.2",
     "node-getopt": "^0.2.3",
     "request-json": "^0.4.10"
+  },
+  "devDependencies": {
+    "express": "^4.10.6",
+    "nock": "^0.52.4"
   }
 }
