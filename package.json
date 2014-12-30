@@ -31,5 +31,9 @@
     "nagios-plugin": "^0.1.2",
     "node-getopt": "^0.2.3",
     "request-json": "^0.4.10"
+  },
+  "devDependencies": {
+    "express": "^4.10.6",
+    "nock": "^0.52.4"
   }
 }

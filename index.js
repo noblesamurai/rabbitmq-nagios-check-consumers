@@ -3,11 +3,11 @@ var util = require('util');
 // add a command line parser;
 // you can substitute with your own favorite npm module
 var getOpt = require('node-getopt')
-.create([ [ 'w', 'warning=<STRING>', 'Warning threshold' ],
-          [ 'c', 'critical=<STRING>', 'Critical threshold' ],
-          [ '',  'amqp-host=<STRING>', 'The AMQP host URL - include credentials' ],
-          [ '',  'amqp-vhost=<STRING>', 'AMQP vhost' ],
-          [ '',  'amqp-queue=<STRING>', 'Name of the queue to monitor' ],
+.create([ [ '', 'consumers-warning-threshold=<STRING>', 'Warning threshold' ],
+          [ '', 'consumers-critical-threshold=<STRING>', 'Critical threshold' ],
+          [ '', 'amqp-host=<STRING>', 'The AMQP host URL - include credentials' ],
+          [ '', 'amqp-vhost=<STRING>', 'AMQP vhost' ],
+          [ '', 'amqp-queue=<STRING>', 'Name of the queue to monitor' ],
           [ 'h', 'help', 'display this help' ] ])
 .bindHelp();
 getOpt.setHelp('Usage: node amqp-consumers.js [Options]\nOptions:\n[[OPTIONS]]');
@@ -38,6 +38,7 @@ var client = request.newClient(amqpHost + '/api/');
 client.get('queues/' + vHost + '/' + queue, function(err, res, body) {
 
   if (err || res.statusCode !== 200) {
+    console.log(err || res);
     plugin.addMessage(plugin.states.UNKNOWN, 'Could not query the API');
   } else {
     var message = body.consumers + ' consumers';
@@ -46,12 +47,12 @@ client.get('queues/' + vHost + '/' + queue, function(err, res, body) {
     plugin.addMessage(plugin.states.OK, message);
 
     // Add warning message if relevant
-    if (body.consumers < args.options.warning) {
+    if (body.consumers <= args.options['consumers-warning-threshold']) {
       plugin.addMessage(plugin.states.WARNING, message);
     }
 
     // Add critical message if relevant
-    if (body.consumers < args.options.critical) {
+    if (body.consumers <= args.options['consumers-critical-threshold']) {
       plugin.addMessage(plugin.states.CRITICAL, message);
     }
   }
