@@ -56,7 +56,7 @@ client.get('queues/' + vHost + '/' + queue, function(err, res, body) {
 
     plugin.addMessage(plugin.states.UNKNOWN, 'Could not query the API');
   } else {
-    var message = body.consumers + ' consumers';
+    var message = body.consumers + ' consumers on queue' + queue;
 
     // Default
     plugin.addMessage(plugin.states.OK, message);
