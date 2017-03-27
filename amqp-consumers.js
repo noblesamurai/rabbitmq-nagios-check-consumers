@@ -51,9 +51,12 @@ client.get('queues/' + vHost + '/' + queue, function(err, res, body) {
     if (res && res.statusCode === 401) {
       plugin.addMessage(plugin.states.UNKNOWN, 'Unauthorized request. Use --username and --password in order to authenticate via basic HTTP auth.');
       return;
+    } else if (res && res.statusCode) {
+      plugin.addMessage(plugin.states.UNKNOWN, 'Could not query the API, got HTTP status ' + res.statusCode);
+      return;
     }
 
-    plugin.addMessage(plugin.states.UNKNOWN, 'Could not query the API, got HTTP status ' + res.statusCode);
+    plugin.addMessage(plugin.states.UNKNOWN, 'Could not query the API');
   } else {
     var message = body.consumers + ' consumers';
 
