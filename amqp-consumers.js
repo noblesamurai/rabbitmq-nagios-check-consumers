@@ -48,7 +48,7 @@ if (username && password) {
 // Request queue info
 client.get('queues/' + vHost + '/' + queue, function(err, res, body) {
   if (err || res.statusCode !== 200) {
-    if (res.statusCode === 401) {
+    if (res && res.statusCode === 401) {
       plugin.addMessage(plugin.states.UNKNOWN, 'Unauthorized request. Use --username and --password in order to authenticate via basic HTTP auth.');
       return;
     }
