@@ -8,10 +8,14 @@ var getOpt = require('node-getopt')
           [ '',  'amqp-host=<STRING>', 'The AMQP host URL - include credentials' ],
           [ '',  'amqp-vhost=<STRING>', 'AMQP vhost' ],
           [ '',  'amqp-queue=<STRING>', 'Name of the queue to monitor' ],
+          [ '', 'username=<STRING>', 'RabbitMQs\'s API username' ],
+          [ '', 'password=<STRING>', 'RabbitMQs\'s API password' ],
           [ 'h', 'help', 'display this help' ] ])
 .bindHelp();
+
 getOpt.setHelp('Usage: node amqp-consumers.js [Options]\nOptions:\n[[OPTIONS]]');
 var args = getOpt.parseSystem();
+
 // validate mandatory arguments
 if (args.options.length <  5) {
     console.log('missing arguments');
@@ -31,14 +35,25 @@ var amqpHost = args.options['amqp-host'];
 var vHost = encodeURIComponent(args.options['amqp-vhost']);
 var queue = encodeURIComponent(args.options['amqp-queue']);
 
+var username = args.options['username'];
+var password = args.options['password'];
+
 // Base URL of API
-var client = request.newClient(amqpHost + '/api/');
+var client = request.createClient(amqpHost + '/api/');
+
+if (username && password) {
+  client.setBasicAuth(username, password);
+}
 
 // Request queue info
 client.get('queues/' + vHost + '/' + queue, function(err, res, body) {
-
   if (err || res.statusCode !== 200) {
-    plugin.addMessage(plugin.states.UNKNOWN, 'Could not query the API');
+    if (res.statusCode === 401) {
+      plugin.addMessage(plugin.states.UNKNOWN, 'Unauthorized request. Use --username and --password in order to authenticate via basic HTTP auth.');
+      return;
+    }
+
+    plugin.addMessage(plugin.states.UNKNOWN, 'Could not query the API, got HTTP status ' + res.statusCode);
   } else {
     var message = body.consumers + ' consumers';
 
