@@ -29,6 +29,6 @@
   "dependencies": {
     "nagios-plugin": "^0.1.2",
     "node-getopt": "^0.2.3",
-    "request-json": "^0.4.10"
+    "request-json": "^0.6.1"
   }
 }
